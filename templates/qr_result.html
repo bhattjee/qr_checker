@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Scanned QR Code Data</h1>
+        <p>
+            <!-- Display the decoded QR code data -->
+            {{ data }}
+        </p>
+        <a href="{{ url_for('index') }}">Back to Generate QR</a>
+    </div>
+</body>
+</html>

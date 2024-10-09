@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Generator</h1>
+        <form action="/generate_qr" method="POST" id="qrForm">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="age" placeholder="Age" required>
+            <input type="text" name="weight" placeholder="Weight" required>
+            <input type="text" name="height" placeholder="Height" required>
+            <input type="text" name="goal" placeholder="Goal" required>
+            <button type="submit">Generate QR Code</button>
+        </form>
+        <div class="qr-code">
+            <img id="qrCodeImage" src="{{ url_for('static', filename='qrcode.png') }}" alt="QR Code" style="display:none;">
+            <p id="qrCodeResult"></p>
+            <button id="scanNowBtn" style="display:none;">Scan Now</button> <!-- New button -->
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code and Scanner</title>
+
+    <!-- Include Html5Qrcode library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    <!-- Reference to external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code and Scanner</h1>
+
+        <div class="qr-container">
+            <!-- QR Code Section -->
+            <div class="qr-code">
+                <h2>Generated QR Code</h2>
+                <img id="qrCodeImage" src="{{ url_for('static', filename='qrcode.png') }}" alt="QR Code">
+            </div>
+
+            <!-- QR Scanner Section -->
+            <div class="qr-scanner">
+                <h2>Scan QR Code</h2>
+                <div id="qr-reader" style="display:none;"></div> <!-- QR Scanner Div (Hidden initially) -->
+                <button id="scanNowBtn">Scan Now</button>
+            </div>
+        </div>
+
+        <p id="qrCodeResult"></p> <!-- To display scanned result -->
+    </div>
+
+    <script>
+        document.getElementById("scanNowBtn").addEventListener("click", function () {
+            const qrReader = document.getElementById("qr-reader");
+            qrReader.style.display = "block"; // Show the QR scanner div
+
+            // Initialize Html5Qrcode and start scanning
+            const html5QrCode = new Html5Qrcode("qr-reader");
+
+            html5QrCode.start(
+                { facingMode: "environment" },  // Use rear camera
+                {
+                    fps: 10,   // Frame rate for scanning
+                    qrbox: 250 // Scanning box size
+                },
+                (decodedText, decodedResult) => {
+                    // On successful scan, redirect to another page with the decoded data
+                    window.location.href = "/qr-result?data=" + encodeURIComponent(decodedText);
+                    html5QrCode.stop();
+                },
+                (errorMessage) => {
+                    console.log("Error scanning QR Code: ", errorMessage);
+                }
+            ).catch(err => {
+                console.error("Unable to start scanning: ", err);
+            });
+        });
+    </script>
+</body>
+</html>
